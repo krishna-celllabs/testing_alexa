@@ -350,7 +350,8 @@ app.get('/page', async (req,res) => {
   axios.get('https://www.amazon.com/ap/oa', {
     params: {
       client_id: process.env.client_id,
-      scope: 'profile',
+      // scope: 'profile',
+      scope: 'alexa::skills:account_linking',
       response_type: 'code',
       redirect_uri: 'https://testing-alexa.onrender.com/token'
     },
