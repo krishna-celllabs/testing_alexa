@@ -352,7 +352,7 @@ app.get('/page', async (req,res) => {
       client_id: process.env.client_id,
       scope: 'profile',
       response_type: 'code',
-      redirect_uri: 'https://alexa-k4i4.onrender.com/token'
+      redirect_uri: 'https://testing-alexa.onrender.com/token'
     },
     headers: {
       'Authorization': `Basic ${authorizationHeader}`
@@ -415,14 +415,14 @@ app.get('/token', async (req, res) => {
   const data = {
     grant_type: 'authorization_code',
     code: req.query.code,
-    redirect_uri: 'https://alexa-k4i4.onrender.com/token',
+    redirect_uri: 'https://testing-alexa.onrender.com/token',
     client_id: process.env.client_id,
     client_secret: process.env.client
   };
 
 let accessToken = null;
 
- await axios.post('https://api.amazon.com/auth/o2/token', qs.stringify(data),{
+ await axios.post('https://testing-alexa.onrender.com/token', qs.stringify(data),{
     headers:{
      'Content-Type': 'application/x-www-form-urlencoded'
     }
