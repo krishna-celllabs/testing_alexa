@@ -411,20 +411,22 @@ app.get('/authorize',  (req, res) => {
 app.get('/token', async (req, res) => {
   console.log("request ",req.query)
 
+  const authorizationHeader = Buffer.from(`${process.env.client_id}:${process.env.client}`).toString('base64');
 
   const data = {
     grant_type: 'authorization_code',
     code: req.query.code,
     redirect_uri: 'https://testing-alexa.onrender.com/token',
-    client_id: process.env.client_id,
-    client_secret: process.env.client
+    // client_id: process.env.client_id,
+    // client_secret: process.env.client
   };
 
 let accessToken = null;
 
  await axios.post('https://testing-alexa.onrender.com/token', qs.stringify(data),{
     headers:{
-     'Content-Type': 'application/x-www-form-urlencoded'
+     'Content-Type': 'application/x-www-form-urlencoded',
+     'Authorization': `Basic ${authorizationHeader}`
     }
   }).then(response => {
     accessToken = response.data.access_token
