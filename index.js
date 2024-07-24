@@ -423,7 +423,7 @@ app.get('/token', async (req, res) => {
 
 let accessToken = null;
 
- await axios.post('https://testing-alexa.onrender.com/token', qs.stringify(data),{
+ await axios.post('https://api.amazon.com/auth/o2/token', qs.stringify(data),{
     headers:{
      'Content-Type': 'application/x-www-form-urlencoded',
      'Authorization': `Basic ${authorizationHeader}`
