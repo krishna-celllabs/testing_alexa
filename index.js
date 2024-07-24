@@ -359,7 +359,7 @@ app.get('/page', async (req,res) => {
     }
   })
   .then(response => {
-    console.log('Authorization Code:', response.data);
+    //console.log('Authorization Code:', response.data);
     return res.send(response.data);
   })
   .catch(error => {
@@ -411,26 +411,28 @@ app.get('/authorize',  (req, res) => {
 app.get('/token', async (req, res) => {
   console.log("request ",req.query)
 
+  const authorizationHeader = Buffer.from(`${process.env.client_id}:${process.env.client}`).toString('base64');
 
   const data = {
     grant_type: 'authorization_code',
     code: req.query.code,
     redirect_uri: 'https://testing-alexa.onrender.com/token',
-    client_id: process.env.client_id,
-    client_secret: process.env.client
+    // client_id: process.env.client_id,
+    // client_secret: process.env.client
   };
 
 let accessToken = null;
 
  await axios.post('https://testing-alexa.onrender.com/token', qs.stringify(data),{
     headers:{
-     'Content-Type': 'application/x-www-form-urlencoded'
+     'Content-Type': 'application/x-www-form-urlencoded',
+     'Authorization': `Basic ${authorizationHeader}`
     }
   }).then(response => {
     accessToken = response.data.access_token
     console.log('response ',response.data);
   }).catch(e => {
-    console.log("Exception ",e);
+    console.log("Exception ",e.response.data);
   })
 
   // Validate the authorization code
